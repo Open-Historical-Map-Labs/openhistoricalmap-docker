@@ -1,0 +1,3 @@
+[submodule "website/openstreetmap-website"]
+	path = website/openstreetmap-website
+	url = https://github.com/openstreetmap/openstreetmap-website.git
