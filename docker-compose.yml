@@ -7,8 +7,9 @@ services:
       POSTGRES_PASSWORD: osm
     volumes:
       - ./website/openstreetmap-website:/openstreetmap-website
-      - ./postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
-      - ./postgres/init-functions-db.sh:/docker-entrypoint-initdb.d/init-functions-db.sh
+      - ./postgres/scripts/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+      - ./postgres/scripts/init-functions-db.sh:/docker-entrypoint-initdb.d/init-functions-db.sh
+      - ./postgres/scripts:/scripts
   website:
     restart: always
     build:
@@ -17,6 +18,7 @@ services:
     command: bundle exec rails server -p 3000 -b '0.0.0.0'
     volumes:
       - ./website/openstreetmap-website:/openstreetmap-website
+      - ./website/scripts:/scripts
     environment:
       RAILS_ENV: production
       SECRET_KEY_BASE: 10d52b1bf88c429e73ffbc5e5f58b037db21f38ea88b8b454e55d52ed8bcc6e7fe3b48a79b2f36eb78a4685224d707767d083f79c51f7d81a9d4a06d1c1e2534
