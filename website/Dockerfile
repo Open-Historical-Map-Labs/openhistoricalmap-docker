@@ -32,5 +32,5 @@ WORKDIR /openstreetmap-website
 ADD ./openstreetmap-website/Gemfile /openstreetmap-website/Gemfile
 ADD ./openstreetmap-website/Gemfile.lock /openstreetmap-website/Gemfile.lock
 ADD ./config/* /osm-config/
-RUN echo 'gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"' >> ./openstreetmap-website/Gemfile /openstreetmap-website/Gemfile
+RUN echo 'gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"' >> /openstreetmap-website/Gemfile
 RUN bundle install
