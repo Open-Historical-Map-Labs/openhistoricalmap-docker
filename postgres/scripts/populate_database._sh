@@ -4,8 +4,8 @@
 # https://github.com/openstreetmap/openstreetmap-website/blob/master/CONFIGURE.md#managing-users
 
 # Usage: bash validate_user.sh "username"
-if [ -n "$1"]; then
-  echo "USAGE: validate_user.sh USERNAME"
+if [ -n "$1" ]; then
+  echo "USAGE: populate_database.sh URL"
   exit 1;
 fi
 
@@ -43,9 +43,11 @@ rm -rf /var/lib/apt/lists/*
 echo -e "\033[33m──━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━──\033[0m"
 echo            "  Downloading and extracting Osmosis"
 echo -e "\033[33m──━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━──\033[0m"
+
 if [ -a "osmosis-latest.zip" ]; then
   rm osmosis-latest.zip
 fi
+
 curl -O http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-latest.zip
 unzip osmosis-latest.zip
 ln -s ./bin/osmosis /usr/bin/osmosis
