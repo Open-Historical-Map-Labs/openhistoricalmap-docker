@@ -11,7 +11,7 @@ docker-compose up -d
 echo "pg functions"
 docker-compose exec postgres /bin/bash /docker-entrypoint-initdb.d/init-functions-db.sh
 echo "website env"
-docker-compose exec website rails db:environment:set RAILS_ENV=production rake assets:precompile
+docker-compose exec website rails db:environment:set RAILS_ENV=production
 echo "website creating"
 # The DB should already be created at this point
 # docker-compose exec website bundle exec rake db:create
