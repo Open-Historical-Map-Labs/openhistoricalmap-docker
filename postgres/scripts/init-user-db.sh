@@ -14,6 +14,7 @@ set -e
 
 # sudo -u postgres -i
 # psql -c "CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';"
+#TODO: Import Database Names from YML file
 
 until psql -d osm -c "CREATE EXTENSION btree_gist"
 do
