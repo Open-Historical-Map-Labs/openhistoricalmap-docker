@@ -21,3 +21,8 @@ echo "website migrating"
 docker-compose exec website bundle exec rake db:migrate
 echo "website testing"
 docker-compose exec website bundle exec rake test:db
+
+echo "Restart the website"
+docker-compose stop website && docker-compose start website
+
+echo "Navigate your browser to http://localhost:3000"
