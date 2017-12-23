@@ -9,6 +9,7 @@ if [ "`whoami`" == "root" ]; then
     postgresql-server-dev-9.6 \
     postgresql-9.6-postgis-2.4 \
     osm2pgsql \
+    curl \
      && rm -rf /var/lib/apt/lists/*
   cd /openstreetmap-website/db/functions
   make libpgosm.so
