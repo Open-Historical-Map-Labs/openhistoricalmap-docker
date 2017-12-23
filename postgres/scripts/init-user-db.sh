@@ -39,3 +39,14 @@ do
     echo "Waiting for postgres osm tile_for_point..."
     sleep 2
 done
+
+# Install the database for osm2pgsql
+createdb -E UTF8 gis
+createlang -d gis plpgsql
+
+psql -d gis -c "CREATE EXTENSION postgis;"
+psql -d gis -c "CREATE EXTENSION postgis_topology;"
+psql -d gis -c "CREATE EXTENSION hstore;"
+curl -o /schema.sql https://raw.githubusercontent.com/openstreetmap/osmosis/master/package/script/pgsnapshot_schema_0.6.sql
+psql -d gis -f /schema.sql
+rm /schema.sql
