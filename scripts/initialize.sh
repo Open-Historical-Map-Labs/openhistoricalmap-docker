@@ -16,7 +16,7 @@ echo "website creating"
 # The DB should already be created at this point
 # docker-compose exec website bundle exec rake db:create
 echo "website pre-compile images"
-docker-compose exec website bash RAILS_ENV=production rake assets:precompile
+docker-compose exec website bash -c "export RAILS_ENV=production && rake assets:precompile"
 echo "website migrating"
 docker-compose exec website bundle exec rake db:migrate
 echo "website testing"
