@@ -10,15 +10,18 @@ docker-compose up -d
 # Create the database
 echo "pg functions"
 docker-compose exec postgres /bin/bash /docker-entrypoint-initdb.d/init-functions-db.sh
+echo "pg user info (build in the functions)"
+docker-compose exec postgres /bin/bash /docker-entrypoint-initdb.d/init-user-db.sh
 echo "website env"
 docker-compose exec website rails db:environment:set RAILS_ENV=production
-echo "website creating"
-# The DB should already be created at this point
-# docker-compose exec website bundle exec rake db:create
 echo "website pre-compile images"
 docker-compose exec website bash -c "export RAILS_ENV=production && rake assets:precompile"
-echo "website migrating"
+echo "website migrating database"
 docker-compose exec website bundle exec rake db:migrate
+echo "set up iD"
+docker-compose exec postgres /bin/bash /docker-entrypoint-initdb.d/init-id.sh
+echo "set up rendering database"
+docker-compose exec rendering_database /bin/bash /docker-entrypoint-initdb.d/init-rendering-db.sh
 echo "website testing"
 docker-compose exec website bundle exec rake test:db
 
