@@ -35,8 +35,18 @@ services:
       - ./website/scripts:/scripts
     env_file:
       - osm-docker.env
-    ports:
-      - 3000:3000
     links:
       - postgres
     command: /bin/bash /scripts/start_server.sh
+
+  nginx:
+    restart: always
+    image: nginx:1.13.8-alpine
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    env_file:
+      - osm-docker.env
+    ports:
+      - 3000:80
+    links:
+      - website
