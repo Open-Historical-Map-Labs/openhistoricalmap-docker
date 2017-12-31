@@ -20,7 +20,7 @@
    /etc/init.d/postgresql reload
 
    # Render Once to generate the state.txt file
-   /bin/bash /docker-entrypoint-initdb.d/render_task.sh
+   /bin/bash /docker-entrypoint-initdb.d/render_task.sh no_append
 
    # Add rendering tasks to CRON
    (crontab -l 2>/dev/null; echo "* * * * * /bin/bash /docker-entrypoint-initdb.d/render_task.sh") | crontab -
