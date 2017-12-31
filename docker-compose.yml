@@ -39,6 +39,21 @@ services:
       - postgres
     command: /bin/bash /scripts/start_server.sh
 
+  cgimap:
+    restart: always
+    build:
+      context: ./cgimap
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./cgimap/lighttpd.conf:/lighttpd.conf
+      - ./cgimap/start.sh:/start.sh
+    env_file:
+      - osm-docker.env
+    tty: true
+    links:
+      - postgres
+    command: /bin/bash /start.sh
+
   nginx:
     restart: always
     image: nginx:1.13.8-alpine
@@ -50,3 +65,4 @@ services:
       - 3000:80
     links:
       - website
+      - cgimap
