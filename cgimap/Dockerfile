@@ -1,0 +1,35 @@
+FROM ubuntu:16.04
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+      autoconf \
+      automake \
+      build-essential \
+      ca-certificates \
+      g++ \
+      git \
+      libboost-date-time-dev \
+      libyajl-dev \ 
+      libboost-dev \
+      libboost-filesystem-dev \
+      libboost-locale-dev \
+      libboost-program-options-dev \
+      libboost-regex-dev \
+      libboost-system-dev \
+      libcrypto++-dev \
+      libfcgi-dev \
+      libmemcached-dev \
+      libpqxx-dev \
+      libtool \
+      libxml2-dev \
+      lighttpd \
+      make \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/zerebubuth/openstreetmap-cgimap.git
+RUN cd ./openstreetmap-cgimap && \
+    /bin/bash autogen.sh && \
+    /bin/bash  ./configure --with-fcgi=/usr --enable-experimental && \
+    cd /
+RUN cd /openstreetmap-cgimap/ && \
+    make && \
+    cd /
