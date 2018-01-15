@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "`whoami`" == "root" ]; then
-
+apt-get update -qq > /dev/null 2>&1
+if [ $? -eq 0 ]; then
   # Add postgresql contribs in order to build libpgosm.so
   apt-get update  -qq && \
       apt-get install -y --no-install-recommends \
@@ -13,5 +13,4 @@ if [ "`whoami`" == "root" ]; then
 
   cd /openstreetmap-website/db/functions
   make libpgosm.so
-
 fi
