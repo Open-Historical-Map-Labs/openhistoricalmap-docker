@@ -20,6 +20,8 @@ services:
       - postgres
     env_file:
       - osm-docker.env
+    ports:
+      - 5432:5432
     volumes:
       - ./rendering_database/scripts:/docker-entrypoint-initdb.d
       - ./rendering_database/data:/var/lib/postgresql/data
