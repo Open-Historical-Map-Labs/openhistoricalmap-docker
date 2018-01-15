@@ -5,7 +5,7 @@ psql -U postgres -c "CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWOR
 
 set -e
 
-until psql -U postgres -d $APIDB_NAME -c "CREATE EXTENSION btree_gist"
+until psql -U postgres -d $APIDB_NAME -c "CREATE EXTENSION IF NOT EXISTS btree_gist"
 do
     echo "Waiting for postgres $APIDB_NAME database ready..."
     sleep 2
