@@ -74,8 +74,8 @@ This image also includes a cron task that is started by the “init-rendering-db
 If the render database and the OSM main database become “out of sync”, it is possible to wipe the database and start from the beginning. Use the following steps to do this:
   1.  Log into the container with “docker-compose rendering_database exec bash”.
   2.  Stop the automatic CRON task with the command `/etc/init.d/cron stop`
-  3.  Remove the `/state.txt` file
-  4.  Run the following command: `/bin/bash /docker-entrypoint-initdb.d/render_task.sh no_append`
+  3.  Remove the `/root/state.txt` file
+  4.  Run the following command: `/bin/bash /docker-entrypoint-initdb.d/render_task.sh $POSTGRES_USER $POSTGRES_PASSWORD $POSTGRES_DATABASE $POSTGISDB_NAME`
   5.  After the process completes, start the CRON task up with `etc/init.d/cron start`
 ### “website”
 Base Image: `ruby:2.3`
