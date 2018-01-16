@@ -1,4 +1,8 @@
 #!/bin/bash
+USER="$1"
+PASSWORD="$2"
+DATABASE="$3"
+POSTGISDB="$4"
 
 # Check for the state file, if none exists, create one
 # if we're creating one, we're going back to the begining of time,
@@ -7,9 +11,11 @@ state_file=./state.txt
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 if [ -f $state_file ]; then
   append='--append'
+  echo "append"
 else
   append=''
   cp $SCRIPTPATH/initial_state.txt $state_file
+  echo "new, `pwd` - `ls $state_file`"
 fi
 
 # http://www.geofabrik.de/media/2012-09-08-osm2pgsql-performance.pdf
@@ -25,9 +31,9 @@ date > /last_cron_run
 osmosis \
   --replicate-apidb \
     host=postgres \
-    user=$POSTGRES_USER\
-    password=$POSTGRES_PASSWORD\
-    database=$POSTGRES_DATABASE  \
+    user=$USER \
+    password=$PASSWORD \
+    database=$DATABASE \
     validateSchemaVersion=no \
   --replication-to-change \
   --write-xml-change \
@@ -37,7 +43,7 @@ osmosis \
       --slim \
       $append \
       -U postgres \
-      -d $POSTGISDB_NAME \
+      -d $POSTGISDB \
     $file > /osm_data/last_osm2pgsql_run 2>&1 \
   && \
     rm $file

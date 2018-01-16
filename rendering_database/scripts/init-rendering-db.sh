@@ -21,6 +21,6 @@
 
    # Add rendering tasks to CRON
    crontab -r
-   (crontab -l 2>/dev/null; echo "* * * * * /bin/bash /docker-entrypoint-initdb.d/render_task.sh") | crontab -
+   (crontab -l 2>/dev/null; echo "* * * * * /bin/bash /docker-entrypoint-initdb.d/render_task.sh $POSTGRES_USER $POSTGRES_PASSWORD $POSTGRES_DATABASE $POSTGISDB_NAME") | crontab -
    /etc/init.d/cron restart
  fi
