@@ -7,11 +7,9 @@ state_file=./state.txt
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 if [ -f $state_file ]; then
   append='--append'
-  echo "append. state_file $state_file, SCRIPTPATH $SCRIPTPATH"
 else
   append=''
   cp $SCRIPTPATH/initial_state.txt $state_file
-  echo "created file. state_file $state_file, SCRIPTPATH $SCRIPTPATH"
 fi
 
 # http://www.geofabrik.de/media/2012-09-08-osm2pgsql-performance.pdf
