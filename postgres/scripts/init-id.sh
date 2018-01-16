@@ -9,6 +9,6 @@
    # /etc/init.d/postgresql reload
 
    # Add the iD key
-   psql -U postgres -d $POSTGISDB_NAME -c "INSERT INTO users (email, id, pass_crypt, creation_time, display_name) VALUES('placeholder@example.com',0,'PLACEHOLDER',now(),'PLACEHOLDER');"
-   psql -U postgres -d $POSTGISDB_NAME -c "INSERT INTO client_applications VALUES('1','iD','$ID_WEBSITE',null,'$ID_WEBSITE','$ID_KEY','$ID_SECRET',0,now(),now(),'t','t','t','t','t','t','t');"
+   psql -U postgres -d $POSTGRES_DATABASE -c "INSERT INTO users (email, id, pass_crypt, creation_time, display_name) VALUES('placeholder@example.com',0,'PLACEHOLDER',now(),'PLACEHOLDER');"
+   psql -U postgres -d $POSTGRES_DATABASE -c "INSERT INTO client_applications VALUES('1','iD','$ID_WEBSITE',null,'$ID_WEBSITE','$ID_KEY','$ID_SECRET',0,now(),now(),'t','t','t','t','t','t','t');"
  fi
