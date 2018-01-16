@@ -1,8 +1,17 @@
 #!/bin/bash
-if [ "$1" = "no_append" ]; then
-  append=''
-else
+
+# Check for the state file, if none exists, create one
+# if we're creating one, we're going back to the begining of time,
+#    so we will not be appending the database
+state_file=./state.txt
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+if [ -f $state_file ]; then
   append='--append'
+  echo "append. state_file $state_file, SCRIPTPATH $SCRIPTPATH"
+else
+  append=''
+  cp $SCRIPTPATH/initial_state.txt $state_file
+  echo "created file. state_file $state_file, SCRIPTPATH $SCRIPTPATH"
 fi
 
 # http://www.geofabrik.de/media/2012-09-08-osm2pgsql-performance.pdf
@@ -18,9 +27,9 @@ date > /last_cron_run
 osmosis \
   --replicate-apidb \
     host=postgres \
-    user=osm \
-    password=osm \
-    database=osm  \
+    user=$POSTGRES_USER\
+    password=$POSTGRES_PASSWORD\
+    database=$POSTGRES_DATABASE  \
     validateSchemaVersion=no \
   --replication-to-change \
   --write-xml-change \
@@ -30,7 +39,7 @@ osmosis \
       --slim \
       $append \
       -U postgres \
-      -d gis \
+      -d $POSTGISDB_NAME \
     $file > /osm_data/last_osm2pgsql_run 2>&1 \
   && \
     rm $file
