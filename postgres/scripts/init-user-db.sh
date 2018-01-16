@@ -11,19 +11,19 @@ do
     sleep 2
 done
 
-until psql -U postgres -d $POSTGISDB_NAME -c "CREATE FUNCTION maptile_for_point(int8, int8, int4) RETURNS int4 AS '/openstreetmap-website/db/functions/libpgosm', 'maptile_for_point' LANGUAGE C STRICT"
+until psql -U postgres -d $POSTGISDB_NAME -c "CREATE OR REPLACE FUNCTION maptile_for_point(int8, int8, int4) RETURNS int4 AS '/openstreetmap-website/db/functions/libpgosm', 'maptile_for_point' LANGUAGE C STRICT"
 do
     echo "Waiting for postgres $POSTGISDB_NAME btree_gist..."
     sleep 2
 done
 
-until psql -U postgres -d $POSTGISDB_NAME -c "CREATE FUNCTION tile_for_point(int4, int4) RETURNS int8 AS '/openstreetmap-website/db/functions/libpgosm', 'tile_for_point' LANGUAGE C STRICT"
+until psql -U postgres -d $POSTGISDB_NAME -c "CREATE OR REPLACE FUNCTION tile_for_point(int4, int4) RETURNS int8 AS '/openstreetmap-website/db/functions/libpgosm', 'tile_for_point' LANGUAGE C STRICT"
 do
     echo "Waiting for postgres maptile_for_point..."
     sleep 2
 done
 
-until psql -U postgres -d $POSTGISDB_NAME -c "CREATE FUNCTION xid_to_int4(xid) RETURNS int4 AS '/openstreetmap-website/db/functions/libpgosm', 'xid_to_int4' LANGUAGE C STRICT"
+until psql -U postgres -d $POSTGISDB_NAME -c "CREATE OR REPLACE FUNCTION xid_to_int4(xid) RETURNS int4 AS '/openstreetmap-website/db/functions/libpgosm', 'xid_to_int4' LANGUAGE C STRICT"
 do
     echo "Waiting for postgres $POSTGISDB_NAME tile_for_point..."
     sleep 2
