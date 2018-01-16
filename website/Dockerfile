@@ -2,30 +2,40 @@ FROM ruby:2.3
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
-      sudo \
       wget \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -qO- https://deb.nodesource.com/setup_7.x | sudo bash -
+RUN wget -qO- https://deb.nodesource.com/setup_7.x | bash -
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
-      build-essential \
-      libpq-dev \
-      vim \
-      git-core \
-      git \
-      libmagickwand-dev \
-      libxml2-dev \ 
-      libxslt1-dev \
       apache2 \
       apache2-dev \
-      libpq-dev  \
-      libsasl2-dev \
+      build-essential \
+      git \
+      git-core \
       imagemagick \
+      jhead \
+      libmagickwand-dev \
+      libpq-dev  \
+      libpq-dev \
+      libsasl2-dev \
+      libxml2-dev \ 
+      libxslt1-dev \
       nodejs \
+      vim \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g svgo imagemin-svgo
+RUN npm install -g \
+      advpng-bin \
+      gifsicle \
+      imagemin-svgo \
+      img-optim \
+      jpegoptim-bin \
+      jpegtran-bin \
+      optipng-bin \
+      pngcrush-bin \
+      pngquant-bin \
+      svgo
 RUN mkdir -p /openstreetmap-website
 RUN mkdir -p /osm-config
 WORKDIR /openstreetmap-website
