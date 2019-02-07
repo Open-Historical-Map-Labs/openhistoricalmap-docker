@@ -8,11 +8,10 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./website/openstreetmap-website:/openstreetmap-website
+      - ./website/config:/osm-config
       - ./website/scripts:/scripts
     env_file:
       - osm-docker.env
-    links:
-      - postgres
     command: /bin/bash /scripts/start_server.sh
 
   cgimap:
@@ -26,8 +25,6 @@ services:
     env_file:
       - osm-docker.env
     tty: true
-    links:
-      - postgres
     command: /bin/bash /start.sh
 
   nginx:
@@ -39,6 +36,3 @@ services:
       - osm-docker.env
     ports:
       - 3000:80
-    links:
-      - website
-      - cgimap
