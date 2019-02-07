@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  website:
+    restart: always
+    build:
+      context: ./website
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./website/openstreetmap-website:/openstreetmap-website
+      - ./website/config:/osm-config
+      - ./website/scripts:/scripts
+    env_file:
+      - osm-docker.env
+    command: /bin/bash /scripts/start_server.sh
+
+  cgimap:
+    restart: always
+    build:
+      context: ./cgimap
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./cgimap/lighttpd.conf:/lighttpd.conf
+      - ./cgimap/start.sh:/start.sh
+    env_file:
+      - osm-docker.env
+    tty: true
+    command: /bin/bash /start.sh
+
+  nginx:
+    restart: always
+    image: nginx:1.13.8-alpine
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    env_file:
+      - osm-docker.env
+    ports:
+      - 3000:80
+
+  postgres:
+    restart: always
+    image: postgres:10
+    env_file:
+      - osm-docker.env
+    volumes:
+      - ./website/openstreetmap-website:/openstreetmap-website
+      - ./postgres/scripts:/docker-entrypoint-initdb.d
+      - ./postgres/data:/var/lib/postgresql/data
