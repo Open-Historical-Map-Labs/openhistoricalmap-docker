@@ -1,19 +1,19 @@
 defaults: &defaults
   # The server protocol and host
   server_protocol: "http"
-  server_url: "openstreetmap.example.com"
+  server_url: "openhistoricalmap.example.com"
   # Publisher
   #publisher_url: ""
   # The generator
-  generator: "OpenStreetMap server"
-  copyright_owner: "OpenStreetMap and contributors"
-  attribution_url: "http://www.openstreetmap.org/copyright"
+  generator: "OpenHistoricalMap server"
+  copyright_owner: "OpenHistoricalMap and contributors"
+  attribution_url: "http://www.openhistoricalmap.org/copyright"
   license_url: "http://opendatacommons.org/licenses/odbl/1-0/"
   # Support email address
-  support_email: "openstreetmap@example.com"
+  support_email: "openhistoricalmap@example.com"
   # Sender addresses for emails
-  email_from: "OpenStreetMap <openstreetmap@example.com>"
-  email_return_path: "openstreetmap@example.com"
+  email_from: "OpenHistoricalMap <openhistoricalmap@example.com>"
+  email_return_path: "openhistoricalmap@example.com"
   # API version
   api_version: "0.6"
   # Application status - possible values are:
@@ -47,7 +47,7 @@ defaults: &defaults
   # Rate limit for message sending
   max_messages_per_hour: 60
   # Domain for handling message replies
-  #messages_domain: "messages.openstreetmap.org"
+  #messages_domain: "messages.openhistoricalmap.org"
   # Geonames authentication details
   #geonames_username: ""
   # GeoIP database
@@ -60,6 +60,10 @@ defaults: &defaults
   spam_threshold: 50
   # Default legale (jurisdiction location) for contributor terms
   default_legale: GB
+  # Use the built-in jobs queue for importing traces
+  # Leave as false if you are using the external high-speed gpx importer
+  # https://github.com/openstreetmap/gpx-import
+  trace_use_job_queue: false
   # Location of GPX traces and images
   gpx_trace_dir: "/home/osm/traces"
   gpx_image_dir: "/home/osm/images"
@@ -74,7 +78,7 @@ defaults: &defaults
   # Enable legacy OAuth 1.0 support
   oauth_10_support: true
   # URL of Nominatim instance to use for geocoding
-  nominatim_url: "//nominatim.openstreetmap.org/"
+  nominatim_url: "https://nominatim.openstreetmap.org/"
   # Default editor
   default_editor: "id"
   # OAuth consumer key for Potlatch 2
@@ -83,10 +87,6 @@ defaults: &defaults
   #oauth_key: ""
   # OAuth consumer key for iD
   id_key: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-  # Whether to require users to view the CTs before continuing to edit...
-  require_terms_seen: false
-  # Whether to require users to agree to the CTs before editing
-  require_terms_agreed: false
   # Imagery to return in capabilities as blacklisted
   imagery_blacklist:
     # Current Google imagery URLs have google or googleapis in the domain
@@ -97,12 +97,10 @@ defaults: &defaults
     # Blacklist here
     - ".*\\.here\\.com[/:].*"
   # URL of Overpass instance to use for feature queries
-  overpass_url: "//overpass-api.de/api/interpreter"
+  overpass_url: "https://overpass-api.de/api/interpreter"
   # Routing endpoints
-  graphhopper_url: "//graphhopper.com/api/1/route"
-  mapquest_directions_url: "//open.mapquestapi.com/directions/v2/route"
-  mapzen_valhalla_url: "//valhalla.mapzen.com/route"
-  osrm_url: "//router.project-osrm.org/route/v1/driving/"
+  graphhopper_url: "https://graphhopper.com/api/1/route"
+  fossgis_osrm_url: "https://routing.openstreetmap.de/"
   # External authentication credentials
   #google_auth_id: ""
   #google_auth_secret: ""
@@ -115,14 +113,12 @@ defaults: &defaults
   #github_auth_secret: ""
   #wikipedia_auth_id: ""
   #wikipedia_auth_secret: ""
-  # MapQuest authentication details
-  #mapquest_key: ""
-  # Mapzen authentication details
-  #mapzen_valhalla_key: ""
   # Thunderforest authentication details
   #thunderforest_key: ""
   # Key for generating TOTP tokens
   #totp_key: ""
+  # Enforce Content-Security-Policy
+  csp_enforce: false
   # URL for reporting Content-Security-Policy violations
   #csp_report_url: ""
 
@@ -148,3 +144,4 @@ test:
   github_auth_secret: "dummy"
   wikipedia_auth_id: "dummy"
   wikipedia_auth_secret: "dummy"
+
