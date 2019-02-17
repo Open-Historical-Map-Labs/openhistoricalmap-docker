@@ -1,5 +1,38 @@
 #!/bin/bash
 
+mkdir -p /builds
+
+# Build iD
+if [ ! -f /builds/iD ]; then
+  cd  /iD
+
+  # Remove the .git file, it causes some issues with the build process
+  if [ -f /iD/.git ]; then
+    rm /iD/.git
+  fi
+
+  # Run the iD build process
+  npm install
+  npm run all
+  rm /openstreetmap-website/vendor/assets/iD/iD.js
+  rm -r /openstreetmap-website/vendor/assets/iD/iD
+  ln -s /iD/dist/iD.min.js /openstreetmap-website/vendor/assets/iD/iD.js
+  ln -s /iD/dist/ /openstreetmap-website/vendor/assets/iD/iD
+  date > /builds/iD
+  cd  /openstreetmap-website
+fi
+
+
+# Script to make the iD changes
+if [ ! -f /builds/iD_changes ]; then
+  date > /builds/iD_changes
+fi
+
+# Script to make the Website changes
+if [ ! -f /builds/website_changes ]; then
+  date > /builds/website_changes
+fi
+
 # Bring the config files over
 cp /osm-config/* /openstreetmap-website/config
 
@@ -10,10 +43,11 @@ rails db:environment:set RAILS_ENV=$RAILS_ENV
 # https://github.com/openstreetmap/openstreetmap-website/issues/2016#issuecomment-427550933
 bundle exec rake i18n:js:export
 
-if [ ! -f /images_compiled ]; then
+if [ ! -f /builds/images_compiled ]; then
   cd  /openstreetmap-website
-  rake assets:precompile && touch /images_compiled
+  rake assets:precompile && date > /builds/images_compiled
 fi
+
 
 cd  /openstreetmap-website
 if ! grep -Fq 'gem "passenger"' /openstreetmap-website/Gemfile
