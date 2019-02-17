@@ -24,6 +24,7 @@ RUN apt-get update -qq && \
       nodejs \
       npm \
       vim \
+      yarn \
     && rm -rf /var/lib/apt/lists/*
 
 # ###########################
@@ -67,6 +68,7 @@ RUN npm install -g \
       pngcrush-bin \
       pngquant-bin \
       svgo \
+      yarn \
     --unsafe-perm=true \
     --allow-root
 
