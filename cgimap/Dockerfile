@@ -23,6 +23,7 @@ RUN apt-get update -qq && \
       libxml2-dev \
       lighttpd \
       make \
+      osmosis \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/zerebubuth/openstreetmap-cgimap.git
