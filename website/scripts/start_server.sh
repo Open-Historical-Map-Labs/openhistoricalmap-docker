@@ -22,21 +22,11 @@ if [ ! -f /builds/iD ]; then
   cd  /openstreetmap-website
 fi
 
-
-# Script to make the iD changes
-if [ ! -f /builds/iD_changes ]; then
-  date > /builds/iD_changes
-fi
-
-# Script to make the Website changes
-if [ ! -f /builds/website_changes ]; then
-  date > /builds/website_changes
-fi
-
 # Bring the config files over
 cp /osm-config/* /openstreetmap-website/config
 
 # make sure the environment is set up and the images have been precompiled
+cd  /openstreetmap-website
 rails db:environment:set RAILS_ENV=$RAILS_ENV
 
 # Need to run rake on i18n for some updates
@@ -55,9 +45,6 @@ if ! grep -Fq 'gem "passenger"' /openstreetmap-website/Gemfile
     echo 'gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"' >> /openstreetmap-website/Gemfile
 fi
 
-# Run this twice, to make sure passenger gets installed
-bundle update --conservative
-bundle update --conservative "passenger"
 mkdir -p /openstreetmap-website/tmp/pids/
 rm /openstreetmap-website/tmp/pids/*
 bundle exec rails server -p $RAILS_SERVER_PORT -b '0.0.0.0'
