@@ -1,6 +1,8 @@
 [submodule "website/openstreetmap-website"]
 	path = website/openstreetmap-website
-	url = https://github.com/openstreetmap/openstreetmap-website.git
+	url = https://github.com/jimmyrocks/openstreetmap-website.git
+	branch = ohm
 [submodule "website/iD"]
 	path = website/iD
-	url = https://github.com/openstreetmap/iD.git
+	url = https://github.com/jimmyrocks/iD.git
+	branch = ohm
