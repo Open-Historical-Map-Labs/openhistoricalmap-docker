@@ -8,6 +8,7 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./website/openstreetmap-website:/openstreetmap-website
+      - ./website/iD:/iD
       - ./website/config:/osm-config
       - ./website/scripts:/scripts
     env_file:
