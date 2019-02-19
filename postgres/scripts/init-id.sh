@@ -11,5 +11,5 @@
    # Add the iD key
    export PGPASSWORD=$POSTGRES_PASSWORD
    psql -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DATABASE -c "INSERT INTO users (email, id, pass_crypt, creation_time, display_name) VALUES('placeholder@example.com',0,'PLACEHOLDER',now(),'PLACEHOLDER');"
-   psql -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DATABASE -c "INSERT INTO client_applications VALUES('1','iD','$ID_WEBSITE',null,'$ID_WEBSITE','$ID_KEY','$ID_SECRET',0,now(),now(),'t','t','t','t','t','t','t');"
+   psql -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DATABASE -c "INSERT INTO client_applications VALUES('1','iD','$OSM_id_website',null,'$OSM_id_website','$OSM_id_key','$OSM_id_secret',0,now(),now(),'t','t','t','t','t','t','t');"
 fi
