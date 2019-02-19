@@ -6,19 +6,26 @@ mkdir -p /builds
 if [ ! -f /builds/iD ]; then
   cd  /iD
 
-  # Remove the .git file, it causes some issues with the build process
+  # Move the .git file, it causes some issues with the build process
   if [ -f /iD/.git ]; then
-    rm /iD/.git
+    mv /iD/.git /iD/tmp.git
   fi
 
   # Run the iD build process
   npm install
+  npm translations
   npm run all
   rm /openstreetmap-website/vendor/assets/iD/iD.js
   rm -r /openstreetmap-website/vendor/assets/iD/iD
   ln -s /iD/dist/iD.min.js /openstreetmap-website/vendor/assets/iD/iD.js
   ln -s /iD/dist/ /openstreetmap-website/vendor/assets/iD/iD
   date > /builds/iD
+
+  # Move the .git file back
+  if [ -f /iD/tmp.git ]; then
+    mv /iD/tmp.git /iD/.git
+  fi
+
   cd  /openstreetmap-website
 fi
 
