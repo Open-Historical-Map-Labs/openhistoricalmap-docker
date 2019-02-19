@@ -86,7 +86,7 @@ defaults: &defaults
   # OAuth consumer key for the web site
   #oauth_key: ""
   # OAuth consumer key for iD
-  id_key: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  # id_key: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" # Set by ENV $OSM_id_key
   # Imagery to return in capabilities as blacklisted
   imagery_blacklist:
     # Current Google imagery URLs have google or googleapis in the domain

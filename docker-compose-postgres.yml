@@ -23,11 +23,11 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./cgimap/lighttpd.conf:/lighttpd.conf
-      - ./cgimap/start.sh:/start.sh
+      - ./cgimap/scripts/:/scripts
     env_file:
       - osm-docker.env
     tty: true
-    command: /bin/bash /start.sh
+    command: /bin/bash /scripts/start.sh
 
   nginx:
     restart: always
