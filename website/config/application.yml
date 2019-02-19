@@ -1,19 +1,19 @@
 defaults: &defaults
   # The server protocol and host
-  server_protocol: "http"
-  server_url: "openhistoricalmap.example.com"
+  ## server_protocol: "http"
+  ## server_url: "openhistoricalmap.example.com"
   # Publisher
   #publisher_url: ""
   # The generator
-  generator: "OpenHistoricalMap server"
-  copyright_owner: "OpenHistoricalMap and contributors"
-  attribution_url: "http://www.openhistoricalmap.org/copyright"
-  license_url: "http://opendatacommons.org/licenses/odbl/1-0/"
+  ## generator: "OpenHistoricalMap server"
+  ## copyright_owner: "OpenHistoricalMap and contributors"
+  ## attribution_url: "http://www.openhistoricalmap.org/copyright"
+  ## license_url: "http://opendatacommons.org/licenses/odbl/1-0/"
   # Support email address
-  support_email: "openhistoricalmap@example.com"
+  ## support_email: "openhistoricalmap@example.com"
   # Sender addresses for emails
-  email_from: "OpenHistoricalMap <openhistoricalmap@example.com>"
-  email_return_path: "openhistoricalmap@example.com"
+  ## email_from: "OpenHistoricalMap <openhistoricalmap@example.com>"
+  ## email_return_path: "openhistoricalmap@example.com"
   # API version
   api_version: "0.6"
   # Application status - possible values are:
@@ -78,7 +78,7 @@ defaults: &defaults
   # Enable legacy OAuth 1.0 support
   oauth_10_support: true
   # URL of Nominatim instance to use for geocoding
-  nominatim_url: "https://nominatim.openstreetmap.org/"
+  ## nominatim_url: "https://nominatim.openstreetmap.org/"
   # Default editor
   default_editor: "id"
   # OAuth consumer key for Potlatch 2
@@ -97,10 +97,10 @@ defaults: &defaults
     # Blacklist here
     - ".*\\.here\\.com[/:].*"
   # URL of Overpass instance to use for feature queries
-  overpass_url: "https://overpass-api.de/api/interpreter"
+  # overpass_url: "https://overpass-api.de/api/interpreter"
   # Routing endpoints
-  graphhopper_url: "https://graphhopper.com/api/1/route"
-  fossgis_osrm_url: "https://routing.openstreetmap.de/"
+  # graphhopper_url: "https://graphhopper.com/api/1/route"
+  # fossgis_osrm_url: "https://routing.openstreetmap.de/"
   # External authentication credentials
   #google_auth_id: ""
   #google_auth_secret: ""
