@@ -54,4 +54,4 @@ fi
 
 mkdir -p /openstreetmap-website/tmp/pids/
 rm /openstreetmap-website/tmp/pids/*
-bundle exec rails server -p $RAILS_SERVER_PORT -b '0.0.0.0'
+bundle exec rails server -p $OSM_server_port -b '0.0.0.0'
