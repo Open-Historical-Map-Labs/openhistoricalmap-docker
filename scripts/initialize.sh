@@ -12,10 +12,6 @@ echo "pg functions: create the database"
 docker-compose exec postgres /bin/bash /docker-entrypoint-initdb.d/init-functions-db.sh
 echo "add pg user info and associate the functions to the database"
 docker-compose exec postgres /bin/bash /docker-entrypoint-initdb.d/init-user-db.sh
-echo "set the website env"
-docker-compose exec website rails db:environment:set RAILS_ENV=production
-echo "website: pre-compile images"
-docker-compose exec website bash -c "export RAILS_ENV=production && rake assets:precompile"
 echo "website: migrating database"
 docker-compose exec website bundle exec rake db:migrate
 echo "add the key to iD"
