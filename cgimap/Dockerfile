@@ -6,6 +6,7 @@ RUN apt-get update -qq && \
       build-essential \
       ca-certificates \
       g++ \
+      gettext \
       git \
       libboost-date-time-dev \
       libyajl-dev \ 
@@ -34,3 +35,6 @@ RUN cd ./openstreetmap-cgimap && \
 RUN cd /openstreetmap-cgimap/ && \
     make && \
     cd /
+
+# Add the configuration file
+COPY ./lighttpd.conf /lighttpd.env.conf
