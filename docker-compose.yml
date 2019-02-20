@@ -8,12 +8,8 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./website/openstreetmap-website:/openstreetmap-website
-      - ./website/iD:/iD
-      - ./website/config:/osm-config
-      - ./website/scripts:/scripts
     env_file:
       - osm-docker.env
-    command: /bin/bash /scripts/start_server.sh
 
   cgimap:
     restart: always
