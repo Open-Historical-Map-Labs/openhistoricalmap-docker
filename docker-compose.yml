@@ -7,6 +7,7 @@ services:
       context: ./website
       dockerfile: ./Dockerfile
     volumes:
+      # mount the submodule in to facilitate local development
       - ./website/openstreetmap-website:/openstreetmap-website
     env_file:
       - osm-docker.env
