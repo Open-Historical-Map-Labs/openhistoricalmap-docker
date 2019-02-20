@@ -1,10 +1,6 @@
 # Run OpenHistoricalMap
 
-1. Download the submodules: `git submodule update --recursive --init`
-
-   (If you have already downloaded the submodules, you can 
-   update the submodules: `git submodule update --recursive --remote`)
-
+1. Download the submodules: `git submodule update --recursive --remote`
 2. If docker-compose isn't already installed, run `bash ./scripts/install_docker.sh` 
 3. Bring up the site with: `docker-compose build && docker-compose up`
 

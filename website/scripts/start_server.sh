@@ -42,11 +42,14 @@ bundle exec rake i18n:js:export
 
 if [ ! -f /builds/images_compiled ]; then
   cd  /openstreetmap-website
-  rake assets:precompile && date > /builds/images_compiled
+  rake assets:precompile && \
+    date > /builds/images_compiled
 fi
 
 
 cd  /openstreetmap-website
+
+# This is only executed if passenger is not in the Gemfile
 if ! grep -Fq 'gem "passenger"' /openstreetmap-website/Gemfile
   then
     echo 'gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"' >> /openstreetmap-website/Gemfile
