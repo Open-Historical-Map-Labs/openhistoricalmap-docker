@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Install the database for osm2pgsql
- if [ "`whoami`" == "root" ]; then
-   # Set up database optimizations
-   # https://wiki.openstreetmap.org/wiki/PostgreSQL
-   # http://www.geofabrik.de/media/2012-09-08-osm2pgsql-performance.pdf
-   # cp /conf/postgresql.conf  /var/lib/postgresql/data/postgresql.conf
-   # /etc/init.d/postgresql reload
-
-   # Add the iD key
-   export PGPASSWORD=$POSTGRES_PASSWORD
-   psql -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DATABASE -c "INSERT INTO users (email, id, pass_crypt, creation_time, display_name) VALUES('placeholder@example.com',0,'PLACEHOLDER',now(),'PLACEHOLDER');"
-   psql -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DATABASE -c "INSERT INTO client_applications VALUES('1','iD','$OSM_id_website',null,'$OSM_id_website','$OSM_id_key','$OSM_id_secret',0,now(),now(),'t','t','t','t','t','t','t');"
-fi
+# Add the iD key
+psql $DATABASE_URL -c "INSERT INTO users (email, id, pass_crypt, creation_time, display_name) VALUES('placeholder@example.com',0,'PLACEHOLDER',now(),'PLACEHOLDER');"
+psql $DATABASE_URL -c "INSERT INTO client_applications VALUES('1','iD','$OSM_id_website',null,'$OSM_id_website','$OSM_id_key','$OSM_id_secret',0,now(),now(),'t','t','t','t','t','t','t');"
