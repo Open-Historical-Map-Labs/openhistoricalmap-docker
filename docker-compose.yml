@@ -16,12 +16,9 @@ services:
     build:
       context: ./cgimap
       dockerfile: ./Dockerfile
-    volumes:
-      - ./cgimap/scripts/:/scripts
     env_file:
       - osm-docker.env
     tty: true
-    command: /bin/bash /scripts/start.sh
 
   nginx:
     restart: always

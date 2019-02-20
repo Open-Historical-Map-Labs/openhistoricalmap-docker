@@ -38,3 +38,6 @@ RUN cd /openstreetmap-cgimap/ && \
 
 # Add the configuration file
 COPY ./lighttpd.conf /lighttpd.env.conf
+COPY scripts /scripts
+
+ENTRYPOINT /scripts/start.sh
