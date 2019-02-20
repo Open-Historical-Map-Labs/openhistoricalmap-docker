@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    restart: always
+    image: postgres:10
+    env_file:
+      - osm-docker.env
+    volumes:
+      - ./website/openstreetmap-website:/openstreetmap-website
+      - ./postgres/scripts:/docker-entrypoint-initdb.d
+      - ./postgres/data:/var/lib/postgresql/data

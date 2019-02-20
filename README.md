@@ -2,7 +2,16 @@
 
 1. Download the submodules: `git submodule update --recursive --remote`
 2. If docker-compose isn't already installed, run `bash ./scripts/install_docker.sh` 
-3. Bring up the site with: `docker-compose build && docker-compose up`
+3. Bring up the site: 
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.postgresql.yml build && \
+  docker-compose -f docker-compose.yml -f docker-compose.postgresql.yml up
+```
+
+If you already have an external PostgreSQL server, set its credentials as
+`DATABASE_URL` in `osm-docker.env` and omit `-f
+docker-compose.postgresql.yml` from the `docker-compose` commands above.
 
 ---
 

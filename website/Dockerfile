@@ -1,4 +1,5 @@
 FROM ruby:2.3
+
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
@@ -74,6 +75,34 @@ RUN npm install -g \
 
 RUN mkdir -p /openstreetmap-website
 WORKDIR /openstreetmap-website
+
+# bundle install takes a while, so only copy these in if Gemfiles have changed
 ADD ./openstreetmap-website/Gemfile /openstreetmap-website/Gemfile
 ADD ./openstreetmap-website/Gemfile.lock /openstreetmap-website/Gemfile.lock
+RUN echo 'gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"' >> /openstreetmap-website/Gemfile
 RUN bundle install -j $(nproc)
+
+# copy the Rails app in
+COPY openstreetmap-website /openstreetmap-website/
+# update the Gemfile again so that rails server knows to use Passenger
+RUN echo 'gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"' >> /openstreetmap-website/Gemfile
+
+# update vendored iD
+RUN rm -rf vendor/assets/iD
+RUN vendorer 
+
+# initialize configurations (to be overridden using environment variables)
+RUN cp config/example.application.yml config/application.yml
+RUN cp config/example.database.yml config/database.yml
+
+# generate translated JS
+RUN bundle exec rake i18n:js:export
+# precompile the asset pipeline
+RUN bundle exec rake assets:precompile
+
+# 1. update the database with the current environment (known at runtime)
+# 2. start the app
+ENTRYPOINT \
+  bundle exec rails db:environment:set RAILS_ENV=$RAILS_ENV && \
+  bundle exec rails server -p $OSM_server_port -b 0.0.0.0
+
