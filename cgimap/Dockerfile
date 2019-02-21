@@ -24,17 +24,14 @@ RUN apt-get update -qq && \
       libxml2-dev \
       lighttpd \
       make \
-      osmosis \
     && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/zerebubuth/openstreetmap-cgimap.git
 RUN cd ./openstreetmap-cgimap && \
     /bin/bash autogen.sh && \
-    /bin/bash  ./configure --with-fcgi=/usr --enable-experimental && \
-    cd /
+    /bin/bash  ./configure --with-fcgi=/usr --enable-experimental
 RUN cd /openstreetmap-cgimap/ && \
-    make && \
-    cd /
+    make
 
 # Add the configuration file
 COPY ./lighttpd.conf /lighttpd.env.conf
