@@ -32,6 +32,14 @@ OpenHistoricalMap uses AWS CodePipeline to deploy services from this
 repository to a Fargate cluster running behind an Application Load Balancer
 (ALB).
 
+The version of `ohm-website` deployed is controlled by the Git submodule in
+`website/openstreetmap-website`. To update it, `git pull` from
+`website/openstreetmap-website` and ensure that the current version is what
+you expect by using `git show` and clean it using `git checkout .`. Next,
+`git add -p website/openstreetmap-website` from the root of
+`openhistoricalmap-docker` to update the submodule commit. After pushing to
+GitHub, the new version of `ohm-website` will be deployed.
+
 Pushes to the `master` branch on GitHub trigger CodeBuild builds. CGImap and
 the website are built according to the buildspecs below, during which they
 are pushed to an Elastic Container Registry (ECR). When the build has
