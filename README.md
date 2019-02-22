@@ -418,20 +418,32 @@ encrypted. `secrets` identifies these below.
 ```yaml
 version: 0.2
 
+env:
+  variables:
+    REPOSITORY_URI: <redacted>.dkr.ecr.us-east-1.amazonaws.com/cgimap
+
 phases:
+  install:
+    commands:
+      # re-clone to pick up git metadata
+      - git clone https://github.com/openhistoricalmap/openhistoricalmap-docker ohm-docker
+      # check out the target version
+      - cd ohm-docker && git checkout $CODEBUILD_RESOLVED_SOURCE_VERSION && cd -
+      # test to see if anything CGImap-related was touched (this doesn't work
+      # because the push may have included more than 1 commit)
+      # - grep -q cgimap/ <<< $(cd ohm-docker && git diff --name-only @~ @)
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=<redacted>.dkr.ecr.us-east-1.amazonaws.com/cgimap
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:latest cgimap/
+      - docker build -t $REPOSITORY_URI:latest ohm-docker/cgimap/
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
@@ -439,7 +451,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo "[{\"name\":\"cgimap\",\"imageUri\":\"${REPOSITORY_URI}:${IMAGE_TAG}\"}]" > imagedefinitions.json
+      - echo "[{\"name\":\"cgimap\",\"imageUri\":\"${REPOSITORY_URI}:${IMAGE_TAG}\"}]" | tee imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
@@ -450,17 +462,25 @@ artifacts:
 ```yaml
 version: 0.2
 
+env:
+  variables:
+    REPOSITORY_URI: <redacted>.dkr.ecr.us-east-1.amazonaws.com/website
+
 phases:
   install:
     commands:
       # re-clone to pick up git submodules
-      - git clone --recursive --depth 1 https://github.com/openhistoricalmap/openhistoricalmap-docker ohm-docker
+      - git clone --recursive https://github.com/openhistoricalmap/openhistoricalmap-docker ohm-docker
+      # check out the target version
+      - cd ohm-docker && git checkout $CODEBUILD_RESOLVED_SOURCE_VERSION && cd -
+      # test to see if anything website-related was touched (this doesn't work
+      # because the push may have included more than 1 commit)
+      # - grep -q website/ <<< $(cd ohm-docker && git diff --name-only @~ @)
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=<redacted>.dkr.ecr.us-east-1.amazonaws.com/website
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
@@ -475,7 +495,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo "[{\"name\":\"website\",\"imageUri\":\"${REPOSITORY_URI}:${IMAGE_TAG}\"}]" > imagedefinitions.json
+      - echo "[{\"name\":\"website\",\"imageUri\":\"${REPOSITORY_URI}:${IMAGE_TAG}\"}]" | tee imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
