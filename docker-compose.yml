@@ -23,6 +23,15 @@ services:
     env_file:
       - osm-docker.env
 
+  jobs:
+    entrypoint: bundle exec rake jobs:work
+    restart: always
+    build:
+      context: ./website
+      dockerfile: ./Dockerfile
+    env_file:
+      - osm-docker.env
+
   cgimap:
     restart: always
     build:
