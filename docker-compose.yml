@@ -8,7 +8,18 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       # mount the submodule in to facilitate local development
-      - ./website/openstreetmap-website:/openstreetmap-website
+      - ./website/openstreetmap-website/Gemfile:/openstreetmap-website/Gemfile
+      - ./website/openstreetmap-website/Gemfile.lock:/openstreetmap-website/Gemfile.lock
+      - ./website/openstreetmap-website/Rakefile:/openstreetmap-website/Rakefile
+      - ./website/openstreetmap-website/Vendorfile:/openstreetmap-website/Vendorfile
+      - ./website/openstreetmap-website/app:/openstreetmap-website/app
+      - ./website/openstreetmap-website/bin:/openstreetmap-website/bin
+      - ./website/openstreetmap-website/config:/openstreetmap-website/config
+      - ./website/openstreetmap-website/config.ru:/openstreetmap-website/config.ru
+      - ./website/openstreetmap-website/db:/openstreetmap-website/db
+      - ./website/openstreetmap-website/lib:/openstreetmap-website/lib
+      - ./website/openstreetmap-website/script:/openstreetmap-website/script
+      - ./website/openstreetmap-website/test:/openstreetmap-website/test
     env_file:
       - osm-docker.env
 
