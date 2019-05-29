@@ -18,8 +18,8 @@ v_lat_float := v_lat / 10000000.0;
 v_lon_float := v_lon / 10000000.0;
 v_tile := 0;
 
-SELECT round((v_lat_float + 90.0) * 65535.0 / 180.0) INTO v_lat2y; +|
-SELECT round((v_lon_float + 180.0) * 65535.0 / 360.0) INTO v_lon2x;+|
+SELECT round((v_lat_float + 90.0) * 65535.0 / 180.0) INTO v_lat2y;
+SELECT round((v_lon_float + 180.0) * 65535.0 / 360.0) INTO v_lon2x;
 FOR j IN 0..15 LOOP
   i := 15 - j;
   SELECT (v_tile << 1) | ((v_lon2x >> i) & 1) INTO v_tile;
