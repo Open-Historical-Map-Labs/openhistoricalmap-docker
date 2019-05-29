@@ -26,9 +26,9 @@ BEGIN
     SELECT PI()/180 INTO v_r_per_d;
 
     SELECT floor((v_lon_float + 180.0) * v_scale / 360.0)
-     INTO v_x;                                                            `
+     INTO v_x;
     SELECT floor((1 - log(tan(v_lat_float * v_r_per_d) +
-     1.0 / cos(v_lat_float * v_r_per_d)) / PI()) * v_scale / 2.0) INTO v_y;`
+     1.0 / cos(v_lat_float * v_r_per_d)) / PI()) * v_scale / 2.0) INTO v_y;
     SELECT ((v_x << v_zoom) | v_y) INTO v_maptile;
   RETURN v_maptile;
 
