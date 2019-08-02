@@ -1,5 +1,8 @@
 FROM ruby:2.3
 
+ARG OSM_overpass_url=//overpass-api.de/api/interpreter
+ARG OSM_nominatim_url=//nominatim.openstreetmap.org/
+
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
