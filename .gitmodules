@@ -1,4 +1,4 @@
 [submodule "website/openstreetmap-website"]
 	path = website/openstreetmap-website
-	url = https://github.com/openhistoricalmap/ohm-website.git
-	branch = ohm
+	url = https://github.com/Open-Historical-Map-Labs/ohm-website.git
+	branch = ohm-mapbox-gl-style
