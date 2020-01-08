@@ -67,12 +67,10 @@ RUN npm install -g \
       imagemin-svgo \
       img-optim \
       jpegoptim-bin \
-      jpegtran-bin \
       optipng-bin \
       pngcrush-bin \
       pngquant-bin \
       svgo \
-      yarn \
     --unsafe-perm=true \
     --allow-root
 
